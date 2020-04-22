@@ -1,0 +1,81 @@
+extends layout
+
+block content
+
+  fieldset#userInfo
+    legend 유저 등록
+    form(action="/db/user",method="post")#userAddForm
+      p
+        span 이름
+        input(type='text', name='name' placeholder='name')
+      p
+        span 나이
+        input(type='number', name='age' placeholder='age')
+      fieldset
+        legend 결혼 유무
+        p
+          span 미혼
+          input(type='checkbox', name='married', placeholder='미혼' value="false")
+        p
+          span 기혼
+          input(type='checkbox', name='married', placeholder='기혼' value="true")
+     
+      p 자기소개
+      textarea(name="comment", cols="30", rows="10")
+      p
+        input(type='submit', value='등록')
+  
+
+  fieldset
+    legend 등록 유저 조회
+    p(style='text-align:center;')
+      input(type='text', name='userKeyword', placeholder='유저 검색')
+      input(type='button', value='검색', onclick='searchUser(this.previousSibling)')
+
+    fieldset
+      legend 유저 리스트
+      ul#userList
+
+  fieldset
+    legend 코멘트
+    fieldset(style="float:left;")
+      legend 코멘트 등록
+      form#commentAddForm(action="/db/comment", method="POST")
+        p
+          span 이름
+          input.name(type='text', name='name' placeholder='name')
+        p 내용
+        textarea.comment(name="comment", cols="30", rows="10", style="width:-webkit-fill-available;")
+        p(style='text-align:center;')
+          input(type="submit", value="등록")
+
+    fieldset(style="float:left;")
+      legend 코멘트 리스트
+      ul#commentList
+        li.commentListItem
+          ul.commentUl
+            li.commentNo 번호
+            li.commentName 작성자
+            li.commentText 내용
+            li.commentDate 작성일
+          
+        
+
+block javascript
+  script(src='/javascripts/index.js')
+  script.
+    var marrieds = document.querySelectorAll('input[name=married]');
+    marrieds.forEach(function(married){
+      married.addEventListener('mousedown',function(e){
+        marrieds.forEach(function(t){
+          if(t.checked){
+            t.checked = false;
+          }
+        });
+      });
+    });
+  script(src='/javascripts/userAddAndUpdate.js')
+  script(src='/javascripts/searchUser.js')
+  script(src='/javascripts/box.js')
+  script(src='/javascripts/comment.js')
+    

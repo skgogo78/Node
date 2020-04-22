@@ -1,0 +1,191 @@
+body {
+  width: max-content;
+  padding: 15px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+p {
+  margin : 15px 0;
+}
+
+span {
+  vertical-align: middle;
+}
+
+fieldset {
+  width: max-content;
+  border: 1px solid #999;
+}
+
+body > fieldset {
+  float : left;
+}
+
+fieldset fieldset{
+  width: inherit;
+}
+
+input[type=text],
+input[type=number] {
+  padding: 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  margin: 0 0 0 15px;
+}
+
+textarea {
+  display: block;
+  border: 1px solid #ccc;
+}
+
+input[type='button'],
+input[type='submit'] {
+  display: inline-block;
+  padding : 5px;
+  margin: 5px;
+  border : 1px solid #999;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+body > fieldset > form > p:nth-last-child(1){
+  text-align: center;
+}
+
+
+input[type='button']:hover,
+input[type='submit']:hover {
+  color : #fff;
+  background-color: #999;
+}
+
+input[type=checkbox]{
+  vertical-align: middle;
+  display: inline-block;
+  margin : 5px;
+}
+
+div.alert{
+  position: fixed;
+  padding: 25px 50px;
+  width: max-content;
+  height: max-content;
+  background-color: #fff;
+  top : 50%;
+  left : 50%;
+  transform: translateX(-50%) translateY(-50%); 
+  border : 1px solid #ccc;
+  box-shadow: 1px 1px 2px #00000080;
+  text-align: center;
+}
+
+
+ul {
+  padding: 0;
+}
+
+ul#commentList li,
+ul#userList li {
+  list-style: none;
+  width: max-content;
+  height: max-content;
+}
+
+ul#commentList li ul li,
+ul#userList li ul li {
+  list-style: none;
+  width: max-content;
+  height: 18px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+li.commentText {
+  width: 150px !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+li.createdAtLi,
+li.commentDate {
+  width: 120px !important;
+}
+
+li.commentNo,
+li.idLi {
+  width: 55px !important;
+  text-align: center;
+}
+
+li.nameLi,
+li.commentName {
+  width: 60px !important;
+  text-align: center;
+}
+
+
+ul.commentUl,
+ul.userListItemUl{
+  cursor: pointer;
+}
+
+ul.commentUl:hover,
+ul.userListItemUl:hover {
+  background-color: bisque;
+}
+
+ul.userItem > li {
+  list-style: none;
+}
+
+ul.userItem > li > ul > li {
+  list-style: none;
+  display: inline-block;
+  height: 18px;
+  padding: 5px 15px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+
+ul.userItem > li > ul > li:nth-child(1){
+  width : 100px;
+}
+
+
+ul.userItem > li > ul > li:nth-child(2){
+  width : 200px;
+}
+
+li.comment p {
+  margin: 0;
+  padding: 5px 15px;
+  border: 1px solid #ccc;
+}
+
+li.comment p:nth-last-child(1) {
+  min-height: 200px;
+  max-height: 500px;
+}
+
+
+
+div.userSelect, div.userUpdate {
+  position: absolute;
+  height: max-content;
+  width: max-content;
+  padding: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px #00000080;
+  background-color: #fff;
+  top : 50%;
+  left : 50%;
+  transform: translateX(-50%) translateY(-50%); 
+}

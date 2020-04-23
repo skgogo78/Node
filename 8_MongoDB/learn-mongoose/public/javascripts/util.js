@@ -95,7 +95,7 @@ function xhrConnect(method, url, setting){
     headerKeys.forEach(function(key){
         xhr.setRequestHeader(key, header[key]);
     });
-    if(method === 'post') {
+    if(method === 'post' || method === 'put' || method === 'patch') {
         
         if(requestObject){
             console.log(requestObject);    
@@ -103,6 +103,8 @@ function xhrConnect(method, url, setting){
         } 
         else xhr.send();
     } else xhr.send();
+
+    return xhr;
 }
 
 

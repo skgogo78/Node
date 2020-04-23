@@ -1,6 +1,6 @@
 var loginForm = document.getElementById('loginForm');
 
-loginForm.addEventListener('submit', function(e){
+if(loginForm) loginForm.addEventListener('submit', function(e){
 
     e.preventDefault();
     e.stopPropagation();
@@ -76,7 +76,7 @@ function signUpAndModify(e){
 
 var signup = document.getElementById('signup');
 
-signup.addEventListener('click',function(e){
+if(signup) signup.addEventListener('click',function(e){
 
     var body = document.getElementsByTagName('body')[0];
 
@@ -156,7 +156,7 @@ signup.addEventListener('click',function(e){
     closeBtn.style.float = 'right';
     closeBtn.innerHTML = '닫기';
     closeBtn.addEventListener('mousedown', function(e){
-        var target = e.currentTarget.parentNode;
+        var target = e.currentTarget.parentNode.parentNode;
         target.remove();
     });
 

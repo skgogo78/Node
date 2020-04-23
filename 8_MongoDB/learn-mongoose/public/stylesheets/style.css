@@ -109,7 +109,7 @@ button#alertCloseBtn {
 }
 
 
-div#signUpBox {
+div#signUpBox, div#commentBox {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -120,4 +120,69 @@ div#signUpBox {
 
 fieldset#signUpField {
   margin: 10px;
+}
+
+fieldset#commentInsertField{
+  margin : 10px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#userInfoUl li {
+  padding: 5px;
+  text-align: left;
+}
+
+#userInfoUl li > span:nth-child(1) {
+  display: inline-block;
+  width: 95px;
+  font-size: 10pt;
+  vertical-align: middle;
+}
+
+#userInfoUl li > span:nth-child(2) {
+  font-size: 10pt;
+  vertical-align: middle;
+}
+
+#userInfoField, #commentList {
+  float: left;
+  margin: 0 20px;
+}
+
+
+ul.commentItem {
+  clear: both;
+}
+ul.commentItem > li {float: left;box-shadow: 0 0 0 0.5px #ccc;padding: 5px 10px;font-size: 9pt; height: 15px;}
+
+ul.commentItem > li:nth-child(1) {width: 75px;}
+
+ul.commentItem > li:nth-child(2) {
+    width: 250px;
+}
+
+ul.commentItem > li:nth-child(3) {
+    width: 150px;
+}
+
+ul#commentListUl {
+    margin: 10px 0;
+}
+
+ul#commentListUl > li {
+  height: 26px;
+}
+
+ul#commentListUl > li:hover{
+  background-color: burlywood;
+}
+
+textarea#comment {
+  width: 300px;
+  height: 200px;
 }

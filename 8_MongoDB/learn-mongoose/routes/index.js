@@ -11,7 +11,10 @@ router.get('/', function(req, res, next) {
   }
   
 }, (req,res)=>{
-  res.render('mypage', { title : req.session.user.name + ' Welcome' });
+  const params = {}
+  Object.assign(params, req.session.user, { title : `${req.session.user.name} Welcome` });
+  console.log(params);
+  res.render('mypage', params);
 });
 
 module.exports = router;

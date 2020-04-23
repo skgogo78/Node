@@ -1,8 +1,41 @@
 extends layout
 
 block content
-    fieldset#userInfoField(style='float:left;')
-        legend 나의 정보
-        p
-            span 이름
-            span= name
+    fieldset
+        fieldset#userInfoField
+            legend 나의 정보
+            ul#userInfoUl
+                li
+                    span 이름
+                    span  : #{name}
+                li
+                    span 나이
+                    span  : #{age}
+                li
+                    span 결혼 여부
+                    if(married === true)
+                        span  : 기혼
+                    else
+                        span  : 미혼
+                li
+                    fieldset(style='margin:0; width:-webkit-fill-available;')
+                        legend 자기소개
+                        pre(style='text-align:left;') #{comment}
+                li 
+                    span 가입일
+                    span  : #{createAt}
+        fieldset#commentList
+            legend 코멘트 목록
+            button#commentListRead(style="display:inline-block; float:right;") 전체 목록
+            ul#commentListUl(style="clear:both;")
+                li#commentColumnLi
+                    ul.commentItem
+                        li 작성자
+                        li 내용
+                        li 작성일
+            button#commentInsertBtn(style="display:inline-block; float:left;") 코멘트 등록
+            button#myComment(style="display:inline-block; float:right;") 내 코멘트
+            button#serachBtn(style="display:inline-block; float:right;") 검색
+            input#searchKeyword(style="display:inline-block; float:right;", type='text', name='keyword', placeholder='키워드를 입력하세요.')
+    script(src='/javascripts/comment.js')
+                

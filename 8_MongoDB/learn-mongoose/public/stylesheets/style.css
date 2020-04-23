@@ -1,0 +1,123 @@
+
+body {
+  padding: 0px;
+  margin : 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color : #3e3e3e;
+}
+
+fieldset {
+  
+  width : max-content;
+  height : max-content;
+  margin : 100px auto;
+  padding : 10px;
+  border : 0;
+  box-shadow : 0 0 0 0.5px #00000080;
+  text-align : center;
+
+}
+
+legend {
+  background-color : #fff;
+  padding : 5px 25px;
+  font-weight: bold;
+  letter-spacing: 1pt;
+}
+
+input[type='submit'],
+input[type='button'],
+button
+{
+  font-size : 9pt;
+  font-weight : bold;
+  background-color : #999;
+  color : #fff;
+}
+
+input[type='submit']:hover,
+input[type='button']:hover,
+button:hover
+{
+  background-color : brown;
+  color : #fff;
+}
+
+input[type='checkbox']{
+  display: inline;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='number']
+{
+  background-color: #fff;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='number'],
+input[type='button'],
+input[type='submit'],
+textarea,
+button {
+  display: block;
+  padding: 5px;
+  margin : 5px;
+  border : 0;
+  border-radius : 5px;
+  box-shadow : 0px 0.5px 1px #00000080, 0px 0px 0px 0.3px #00000080;
+}
+
+input::placeholder {
+  font-size : 9pt;
+  vertical-align: middle;
+  color : #999;
+}
+
+#loginForm input[type='submit']{
+  float : left;
+}
+
+#loginForm input[type='button']{
+  float: right;
+}
+
+.box {
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 0.5px 1px #00000080, 0px 0px 0px 0.3px #00000080;
+  background-color: #fff;
+}
+
+#alertBox {
+  
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-70%);
+  
+}
+
+p#alertContent {
+  font-size: 11pt;
+  letter-spacing: 0.5pt;
+}
+
+button#alertCloseBtn {
+  display: inline-block;
+}
+
+
+div#signUpBox {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: max-content;
+  height: max-content;
+  transform: translateX(-50%) translateY(-60%);
+}
+
+fieldset#signUpField {
+  margin: 10px;
+}

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  fieldset#loginFieldset
+    legend 로그인
+    form#loginForm(action="/users/signin", method="get")
+      input#name(type="text", name="name", placeholder="이름")
+      input#password(type="password", name="password", placeholder="비밀번호")
+      input#signin(type="submit", name="signin", value="로그인")
+      input#signup(type="button", name="signup", value="회원가입")
+  script(src='/javascripts/user.js')

@@ -1,0 +1,11 @@
+#profileContainer
+    #profileInBox
+        .profileImg
+            img(src=imgPath? imgPath : './images/profileDefaultIcon.svg')
+        .profileInfo
+            span#userID #{id}
+                span#userModifyBtn
+                    img(src='./images/modifyIcon.svg')
+            span#userEmail #{email}
+    #signOutBox 
+        button#signOutButton 로그아웃

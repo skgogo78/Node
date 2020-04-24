@@ -1,0 +1,53 @@
+#profileContainer {
+    margin : auto;
+}
+
+#profileInBox, .profileInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+#profileInBox, #signOutBox {
+    margin:5px auto;
+}
+
+.profileImg, .profileInfo{
+    display: flex;
+    flex : 1;
+}
+
+#userID {
+
+    font-size : 15pt;
+    font-weight: bold;
+    letter-spacing: 1pt;
+    margin: 10px auto;
+    display: flex;
+}
+
+
+.profileImg > img {
+    width: 100px;
+    margin : 0 auto;
+}
+
+#userID > span {
+    vertical-align: middle;
+    box-shadow: 0 0 0 0.5px #ccc, 1px 1px 1px #ccc;
+    padding : 2px 3px;
+    border-radius: 5px;
+    display: inline-flex;
+    flex-direction: row;
+    margin : auto 0 auto 5px;
+    cursor: pointer;
+}
+
+#userID > span > img {
+    width: 15px;
+    opacity: 0.7;
+    margin : auto;
+}
+
+#userEmail {
+    font-size : 11pt;
+}

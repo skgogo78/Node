@@ -1,0 +1,16 @@
+.snsItemList, #snsWelcomeMsgBox {
+    flex : 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#snsWelcomeMsgBox {
+    margin: auto;
+}
+
+#snsWelcomeMeg > p {
+    font-size: 20pt;
+    font-weight: bold;
+    letter-spacing: 1pt;
+    margin : 10px 0;
+}

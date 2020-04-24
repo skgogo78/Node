@@ -1,0 +1,33 @@
+
+#signInContainer {
+    margin : auto;
+}
+
+#signInBox {
+    padding : 5px;
+    margin : 10px 0;
+}
+
+#signInForm > input{
+    margin : 10px auto;
+}
+
+#signInForm > input[type=submit],
+#signInForm > button
+{
+    width: 100%;
+    margin : 10px auto;
+}
+
+#signUpButton {
+    color : #ffffff;
+    box-shadow: 0 0 0 0.5px cadetblue;
+    background-color: cadetblue;
+}
+
+#signUpButton:hover
+{
+    color : #fff;
+    background-color: tomato;
+    box-shadow: 0 0 0 0.5px tomato;
+}

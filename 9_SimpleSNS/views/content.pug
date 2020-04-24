@@ -1,0 +1,14 @@
+extends layout
+block content
+    .snsItemList
+        #snsWelcomeMsgBox
+            div#snsWelcomeMeg
+                p WELCOME
+                p TO
+                p SIMPLE SNS
+            button#snsStartBtn Get Started
+    script.
+        var snsWelcomeMsgBox = document.getElementById('snsWelcomeMsgBox');
+        if(snsWelcomeMsgBox) snsWelcomeMsgBox.addEventListener('mousedown', function(e){
+            alert('시작');
+        });

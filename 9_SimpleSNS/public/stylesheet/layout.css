@@ -1,0 +1,165 @@
+* {
+    margin : 0;
+    padding : 0;
+    font-size: 10pt;
+    color : #4e4e4e;
+    letter-spacing: 0.5pt;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    margin: 0 5%;
+    height: -webkit-fill-available;
+}
+
+header {
+    flex-basis: 20%;
+    align-items: flex-start;
+    box-shadow: 1px 0 3px 0px #aaa;
+}
+
+section {
+    flex-basis: 60%;
+}
+
+aside {
+    flex-basis: 20%;
+    align-items: flex-end;
+    box-shadow: -1px 0 3px 0px #aaa;
+}
+
+header, section, aside {
+    flex-grow: 1;
+    flex-shrink: 1;
+    height: auto;
+}
+
+header, section, aside, nav, #headerBar,  #signInContainer, #profileContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#headerBar {
+    margin : 10px auto;
+    flex : 1 1 40%;   
+}
+
+nav {
+    margin : 10px auto;
+    flex : 1 1 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+nav > div {
+    flex : 0 1 auto;
+    display: flex;
+}
+
+nav > div > span {
+    font-size : 12pt;
+    font-weight: bold;
+    letter-spacing: 1pt;
+    padding : 10px 15px;
+    margin : 10px auto;
+    box-shadow: 0 0 0 0.5px #aaa;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+nav > div > span:hover {
+    color : #fff;
+    background-color: darkcyan;
+}
+
+input, button, textarea{
+    display : block;
+    color : inherit;
+    font-size : inherit;
+    padding : 10px 10px;
+    margin : 10px;
+    border : 0;
+    box-shadow: 0 0 0 0.5px #ccc;
+    border-radius: 20px;
+}
+
+input:focus,
+button:focus,
+textarea:focus
+{
+    outline: none;
+}
+
+input::placeholder{
+    color : #aaa;
+}
+
+input[type=submit],
+input[type=button],
+button
+{
+    font-weight: bold;
+    color : #fff;
+    background-color: steelblue;
+    box-shadow: 0 0 0 0.5px steelblue;
+    cursor: pointer;
+}
+
+
+
+input[type=submit]:hover,
+input[type=button]:hover,
+button:hover
+{
+    color : #fff;
+    background-color: tomato;
+    box-shadow: 0 0 0 0.5px tomato;
+}
+
+
+
+#sectionHeader, #sectionBody {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+}
+
+#sectionBody {
+    flex-basis: 85%;
+}
+
+#searchBar {
+    flex: 1;
+    padding : 10px 0;
+    margin: 20px auto;
+    box-shadow: 0 1px 1px #aaa;
+    display: flex;
+    flex-direction: row;
+}
+
+#searchBar > div {
+    display: flex;
+    flex-direction: row;
+    flex : 0;
+    margin : 0 auto;
+}
+
+#seachButton {
+    background-image: url(../images/searchIcon.svg);
+    background-repeat: no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+    width: 50px;
+    height: 35px;
+    background-color: #fff;
+    box-shadow: 0 0 0 0.5px #aaa;
+}
+
+#seachButton:hover{
+    background-color: rgb(150, 183, 199);
+}
+
+#searchInput {
+    width: 300px;
+}

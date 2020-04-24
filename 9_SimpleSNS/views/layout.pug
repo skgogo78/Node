@@ -1,0 +1,36 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        title=title
+        meta(name='viewport' content='width=device-width, user-scalable=no')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        link(rel='stylesheet' href='./stylesheet/layout.css')
+        link(rel='stylesheet' href='./stylesheet/signin.css')
+        link(rel='stylesheet' href='./stylesheet/profile.css')
+        link(rel='stylesheet' href='./stylesheet/content.css')
+        link(rel='stylesheet' href='./stylesheet/util.css')
+        link(rel="shortcut icon" href="#")
+    body
+        main
+            header
+                #headerBar
+                nav
+                    #list
+                        span POST
+            section
+                article#sectionHeader
+                    #searchBar
+                        div
+                            input#searchInput(type='text', placeholder='키워드를 입력해주세요.')
+                            button#seachButton
+                article#sectionBody
+                    block content
+
+            aside
+        footer
+    script(src='./javascript/util.js')
+    script(src='./javascript/signin.js')
+    script(src='./javascript/profile.js')
+    script(src='./javascript/content.js')
+    script(src='./javascript/layout.js')

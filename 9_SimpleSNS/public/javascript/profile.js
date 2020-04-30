@@ -1,7 +1,9 @@
 function menuExtend(){
 
-    var nav = document.querySelector('nav');
+    menuExtendDelete();
 
+    var nav = document.querySelector('nav');
+    
     var profile = elementCreate('div', { classNames : '_extendMenu', id : 'profileRead' });
     profile.innerHTML = '<span>MY INFO</span>';
 
@@ -16,19 +18,29 @@ function menuExtend(){
 function menuExtendDelete(){
 
     var _extendMenu = document.querySelectorAll('._extendMenu');
-    _extendMenu.forEach(function(menu){
+
+    if(_extendMenu) _extendMenu.forEach(function(menu){
         menu.remove();
     });
 
 }
 
 function userModifyEvent(){
+
     var userModifyBtn = document.getElementById('userModifyBtn');
+
     if(userModifyBtn){ 
         userModifyBtn.addEventListener('mousedown', function(e){
 
-        });
+            xhrConnect('get', '/auth/signedit', {
+                status200 : function(res){
+                    var headerBar = document.getElementById('headerBar');
+                    headerBar.innerHTML = res;
+                    signUpEventFun();
+                }
+            });
 
+        });
         menuExtend();
     }
 }
@@ -39,7 +51,7 @@ function signOutEvent(){
     if(signOutButton) signOutButton.addEventListener('mousedown', function(){
         xhrConnect('get', '/auth/signout', {
             header : {
-                'Content-Type' : 'application/text; charset=utf-8'
+                'Content-Type' : 'application/text;charset=utf-8'
             },
             
             status200 : function(res){
@@ -51,8 +63,9 @@ function signOutEvent(){
                 menuExtendDelete();
             }
         });
-    });
 
+    });
+    
 }
 
 

@@ -1,4 +1,14 @@
+function fileImageCheck(file){
 
+    var types = file.type.split('/');
+
+    if((types[1]==='png' || types[1] ==='jpg'
+    || types[1] ==='jpeg' || types[1] ==='gif')
+    || types[1] ==='svg' || types[1] ==='bmp'){
+        return true;
+    } else return false;
+
+}
 function checkBoxOnlyOne(checkboxs, hidden){
 
     checkboxs.forEach(function(box){
@@ -49,7 +59,7 @@ function xhrConnect(method, url, setting){
     if(setting){
         async = setting.async? setting.async : true;
         requestObject = setting.requestObject? setting.requestObject : '';  
-        header = setting.header? setting.header : { 'Content-Type' : 'charset=utf-8' };
+        header = setting.header? setting.header : '';
         status200 = setting.status200? setting.status200 : '';
         status304 = setting.status304? setting.status304 : '';
         status400 = setting.status400? setting.status400 : '';
@@ -58,17 +68,20 @@ function xhrConnect(method, url, setting){
         status404 = setting.status404? setting.status404 : '';
     }
 
-    var queryString = '';
+    var queryString = '?';
 
     if(method === 'get'){
+
         if(requestObject){
-            queryString = '?';
+            
             var keys = Object.keys(requestObject);
             keys.forEach(function(key){
                 queryString += key + '=' + requestObject[key] + '&';
             });
         }
     }
+
+    queryString += 'p=' + window.location.href;
 
     xhr.open(method, url + queryString, async);
 
@@ -90,16 +103,25 @@ function xhrConnect(method, url, setting){
         }
     }
     
-    var headerKeys = Object.keys(header);
+    if(header){
+        var headerKeys = Object.keys(header);
 
-    headerKeys.forEach(function(key){
-        xhr.setRequestHeader(key, header[key]);
-    });
+        headerKeys.forEach(function(key){
+            if(key.toLocaleLowerCase() === 'content-type'){
+                header[key].replace(/\s/gi, "");
+            }
+            xhr.setRequestHeader(key, header[key]);
+        });
+    }
+
     if(method === 'post' || method === 'put' || method === 'patch') {
         
         if(requestObject){
-            console.log(requestObject);    
-            xhr.send(JSON.stringify(requestObject));
+            if(requestObject instanceof FormData){
+                xhr.send(requestObject);
+            } else {
+                xhr.send(JSON.stringify(requestObject));
+            }
         } 
         else xhr.send();
     } else xhr.send();

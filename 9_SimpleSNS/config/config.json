@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": 123123,
-    "database": "database_development",
+    "password": "123123",
+    "database": "simplesns",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false

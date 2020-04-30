@@ -1,0 +1,14 @@
+#signUpContainer
+    #signUpBox 
+        form#signUpForm(action=url? url+'/'+id : '/auth/signup', method='post', encType="multipart/form-data")
+            if method
+                input(type='hidden', name='_method', value=method)
+            .profileImg(style='position: relative;')
+                img#signUpImg(src=profileImg? profileImg : './images/profileDefaultIcon.svg')
+                input#signUpImgInput(type='file', name='profileImg')
+            input(type='email', placeholder='E-mail', name='email', value=email? email : '')
+            input(type='password', placeholder='PASSWORD', name='password')
+            input(type='password', placeholder='PASSWORD CHECK', name='_password')
+            input(type='text', placeholder='NICKNAME', name='nickname', value=nickname? nickname : '')
+            input#signUpSubmitBtn(type='submit', value=url? '수정' : '회원가입')
+            input#signUpCloseBtn(type='button', value='닫기')

@@ -1,0 +1,22 @@
+ul#posts
+    each val in list
+        -const item = val.dataValues
+        li.postItem(data-id=item.id)
+            .postProfileImg
+                img(src=item.member.profileImg)
+            .post
+                .postHeader
+                    span.postnickname=item.member.nickname
+                .postBody
+                    span.postContent=item.content
+                .postFooter
+                    .postDate
+                        span=item.createdAt
+                    .postCommentCount
+                        img(src='./images/commentIcon.svg')
+                        span=item.commentCount
+                    .postFavoriteCount
+                        img(src='./images/favoriteIcon.svg')
+                        span=item.favoriteCount
+
+

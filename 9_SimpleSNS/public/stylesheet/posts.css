@@ -1,0 +1,93 @@
+
+ul#posts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+li.postItem {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    width: -webkit-fill-available;
+    margin: 10px auto;
+    padding: 10px 55px;
+    box-shadow: 0 0 0 0.3px #ccc;
+}
+
+li.postItem:hover {
+    background-color: #fbfbfb;
+}
+
+.postProfileImg > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 0;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0 30px;
+    width: -webkit-fill-available;
+}
+
+.postBody {
+    margin: 10px 0;
+}
+
+.postFooter {
+    display: flex;
+    flex-direction: row;
+}
+
+span.postnickname {
+    font-size: 10pt;
+    letter-spacing: 0.5pt;
+    font-weight: bold;
+}
+
+.post > div {
+    padding: 0 0 5px 0;
+}
+
+.postBody {
+    margin: 10px 0;
+}
+
+.postFooter > div {
+    padding: 0 5px;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.postFooter > div:nth-last-child(1){
+    border:0;
+}
+
+.postFooter > div > span {
+    font-size: 9pt;
+    color: #777;
+}
+
+.postFooter > div img {
+    height: 10px;
+    opacity: 0.5;
+    display: inline-block;
+    margin: auto 5px auto 0;
+}
+
+.postDate {
+    padding: 0 5px 0 0 !important;
+}
+
+.postCommentCount:hover,
+.postFavoriteCount:hover
+{
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: antiquewhite;
+}

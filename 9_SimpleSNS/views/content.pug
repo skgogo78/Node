@@ -1,6 +1,6 @@
 extends layout
 block content
-    .snsItemList
+    #snsItemList
         #snsWelcomeMsgBox
             div#snsWelcomeMeg
                 p WELCOME
@@ -10,5 +10,5 @@ block content
     script.
         var snsWelcomeMsgBox = document.getElementById('snsWelcomeMsgBox');
         if(snsWelcomeMsgBox) snsWelcomeMsgBox.addEventListener('mousedown', function(e){
-            alert('시작');
+            postLoad();
         });

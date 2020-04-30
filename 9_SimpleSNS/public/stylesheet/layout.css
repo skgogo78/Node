@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Sunflower:wght@300;500;700&display=swap');
+
 * {
     margin : 0;
     padding : 0;
@@ -17,6 +19,7 @@ header {
     flex-basis: 20%;
     align-items: flex-start;
     box-shadow: 1px 0 3px 0px #aaa;
+    z-index: 1;
 }
 
 section {
@@ -27,6 +30,7 @@ aside {
     flex-basis: 20%;
     align-items: flex-end;
     box-shadow: -1px 0 3px 0px #aaa;
+    z-index: 1;
 }
 
 header, section, aside {
@@ -145,21 +149,262 @@ button:hover
     margin : 0 auto;
 }
 
-#seachButton {
+#searchButton {
     background-image: url(../images/searchIcon.svg);
+}
+
+#writeButton{
+    background-image: url(../images/writtingIcon.svg);
+}
+
+#searchButton, #writeButton {
     background-repeat: no-repeat;
-    background-size: 55%;
+    background-size: 40%;
     background-position: 50%;
     width: 50px;
     height: 35px;
     background-color: #fff;
     box-shadow: 0 0 0 0.5px #aaa;
+    opacity: 0.8;
 }
 
-#seachButton:hover{
+#searchButton:hover,
+#writeButton:hover
+{
     background-color: rgb(150, 183, 199);
 }
 
 #searchInput {
     width: 300px;
+}
+
+#writeBox {
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-55%);
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+div#writeFoot {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+div#writeMenu {
+    display: flex;
+    flex-direction: row;
+}
+
+div#writeMenu > span {
+    font-size: 8pt;
+    flex: 1;
+    padding: 2px 2px 5px 2px;
+    margin: 0 4px;
+    border-radius: 15px;
+    box-shadow: 0 0 0 1px #ccc;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+div#writeMenu > span:hover{
+    background-color: antiquewhite;
+}
+
+div#writeDiv {
+    width: 500px;
+    height: 250px;
+    margin: 20px 0 0 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: initial;
+    font-size: initial;
+    color: inherit;
+    overflow: overlay;
+}
+
+div#writeDiv p,
+div#writeDiv span {
+    text-align: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+li#NanumGothic{
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+li#NanumMyeongjo{
+    font-family: 'Nanum Myeongjo', serif;
+}
+
+li#NotoSansKR {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+li#Sunflower {
+    font-family: 'Sunflower', sans-serif;
+}
+
+li#DoHyeon {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+li#NanumPenScript {
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+li#fontOblique{
+    font-style: oblique;
+}
+
+div#writeUtilBox {
+    padding: 0;
+}
+
+#writeUtilBox > ul {
+    list-style: none;
+}
+
+#writeUtilBox > ul > li {
+    padding: 5px 8px;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#writeUtilBox > ul > li:nth-last-child(1) {
+    border: 0;
+}
+
+#writeUtilBox > ul > li:hover {
+    background-color: antiquewhite;
+}
+
+div#colorArea, span#colorPicker{
+    pointer-events: none;
+}
+
+div#colorArea, div#colorAreaClone {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    background: 
+    linear-gradient(180deg, 
+    hsl(0,100%,100%, 0) 0%, 
+    hsl(0,100%,0%) 100%), 
+    linear-gradient(90deg, 
+    hsl(0,100%,100%) 0%, 
+    hsl(0,100%,100%,0) 100% );
+    background-color: red;
+}
+
+div#colorAreaClone {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+div#colorBody {
+    position: relative;
+    margin: 15px auto 0 auto;
+    width: 100%;
+}
+
+span#colorPicker {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    box-shadow: 1px 1px 1px #ccc, inset 1px 1px 1px #ccc;
+    background-color: #fff;
+}
+
+div#colorBox {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: max-content;
+}
+
+div#colorHeader {
+    display: flex;
+    flex-direction: row;
+}
+
+span#colorPreview {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 1px 1px 1px #999;
+    margin: auto 5px auto 0;
+}
+
+input#colorHueRange {
+    border: 0;
+    box-shadow: none;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius:0;
+    box-shadow: 1px 1px 1px #999;
+    -webkit-appearance: none;
+}
+
+input#colorHueRange::-webkit-slider-runnable-track {
+    background:linear-gradient(90deg, 
+    hsl(0, 100%, 50%) 0%, 
+    hsl(22, 100%, 50%) 6.25%, 
+    hsl(45, 100%, 50%) 12.5%,
+    hsl(67, 100%, 50%) 18.75%,
+    hsl(90, 100%, 50%) 25%,
+    hsl(112, 100%, 50%) 31.25%,
+    hsl(135, 100%, 50%) 37.5%,
+    hsl(157, 100%, 50%) 43.75%,
+    hsl(180, 100%, 50%) 50%,
+    hsl(202, 100%, 50%) 56.25%,
+    hsl(225, 100%, 50%) 62.5%,
+    hsl(247, 100%, 50%) 68.75%,
+    hsl(270, 100%, 50%) 75%,
+    hsl(292, 100%, 50%) 81.25%,
+    hsl(314, 100%, 50%) 87.5%,
+    hsl(336, 100%, 50%) 93.75%,
+    hsl(359, 100%, 50%) 100%);
+    height:25px
+}
+
+input#colorHueRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width : 5px;
+    height : 25px;
+    background-color : #fff;
+    box-shadow : 0 0 0 0.3px #bbb, 1px 1px 1px #00000060;
+    cursor:pointer
+}
+
+div#colorFoot > button {
+    padding: 6px;
+}
+
+div#colorFoot {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+div#writeHead > p {
+    font-size: 15pt;
+    font-weight: bold;
+}
+div#writeHead {
+    margin-bottom: 15px;
 }

@@ -1,9 +1,9 @@
 #profileContainer
     #profileInBox
         .profileImg
-            img(src=imgPath? imgPath : './images/profileDefaultIcon.svg')
+            img(src=profileImg? profileImg : './images/profileDefaultIcon.svg')
         .profileInfo
-            span#userID #{id}
+            span#userID #{nickname}
                 span#userModifyBtn
                     img(src='./images/modifyIcon.svg')
             span#userEmail #{email}

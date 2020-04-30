@@ -5,19 +5,35 @@ const path = require('path');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const passport = require('passport');
 require('dotenv').config();
+
 
 const pageRouter = require('./router/page');
 const authRouter = require('./router/auth');
+const imgRouter = require('./router/img');
+const postRouter = require('./router/post');
+
+const sequelize = require('./models').sequelize;
+
+const passportConfig = require('./passport');
 
 const app = express();
+
+sequelize.sync();
+
+passportConfig(passport);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('port', process.env.PORT || 8001);
 
+
+
+
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded( { extended : false } ));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -33,8 +49,14 @@ app.use(session({
 
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/',pageRouter);
 app.use('/auth',authRouter);
+app.use('/img',imgRouter);
+app.use('/post',postRouter);
 
 app.use((req,res,next) => {
     const err = new Error('Not Found');

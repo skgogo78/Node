@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const {reqUrlCheck, isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const { Member } = require('../models');
 
+
 router.get('/',reqUrlCheck, (req,res,next)=>{
     if(req.isAuthenticated()){
         next();
@@ -13,6 +14,12 @@ router.get('/',reqUrlCheck, (req,res,next)=>{
 
 }, (req,res)=>{
     res.render('profile',req.user.dataValues);
+
+});
+
+router.get('/check', reqUrlCheck, isLoggedIn, (req, res)=>{
+
+    res.send();
 
 });
 

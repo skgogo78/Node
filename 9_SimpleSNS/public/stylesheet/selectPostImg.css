@@ -1,0 +1,188 @@
+div#selectPost {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#selectPostBox {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+div#selectPostBody {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 100%;
+}
+
+div#selectPostImg {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
+.selectPostImgBtnDiv {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 10%;
+    height: 100%;
+}
+
+div#selectPostImgDiv {
+    display: flex;
+    flex: 0 1 80%;
+    height: auto;
+    width: 100%;
+    max-width: inherit;
+    margin: auto;
+}
+
+#selectPostImgDiv img {
+    width: inherit;
+    margin: auto;
+}
+
+div#selectPostContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+div#selectPostContentHeader {
+    flex: 1 1 10%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 25px;
+    box-shadow: 0 1px 5px #ccc;
+}
+
+#selectPostProfileImg > img {
+    width: 100%;
+    height: 100%;
+}
+
+div#selectPostContentBody {
+    flex: 1 1 86%;
+    padding: 20px;
+    box-shadow: 0 1px 5px #ccc;
+    display: flex;
+    flex-direction: column;
+    overflow: overlay;
+}
+
+div#selectPostContentFooter {
+    flex: 1 1 4%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+div#selectPostProfileImg {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#selectPostCommentCount > img, #selectPostFavoriteCount > img {
+    width: 25px;
+    height: auto;
+    opacity: 0.7;
+}
+
+div#selectPostLeft {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 80%;
+}
+
+div#selectPostRight {
+    flex: 0 1 20%;
+    margin-left: 25px;
+}
+
+div#selectPostNickName {
+    flex: 1;
+    margin: auto 20px;
+}
+
+div#selectPostNickName > span {
+    font-size: 15pt;
+    font-weight: bold;
+    letter-spacing: 1pt;
+}
+
+div#selectPostContentBody_B {
+    flex: 1;
+    color: #3e3e3e;
+}
+
+div#selectPostContentBody_F {
+    flex: 0;
+    margin: 5px 0;
+}
+
+div#selectPostCommentCount, div#selectPostFavoriteCount {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+#selectPostCommentCount > span, #selectPostFavoriteCount > span {
+    margin-left: 20px;
+}
+
+.selectPostImgBtnDiv > div:nth-last-child(1) {
+    flex: 0 1 80%;
+    display: flex;
+}
+
+.btnBack {
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #3a3a3add;
+    cursor: pointer;
+}
+
+.btnBack:hover{
+    background-color: #a52a2add;
+}
+
+.leftBtn1 {
+    margin: 10px auto 10px 10px;
+}
+
+.leftBtn2 {
+    margin: auto auto auto 10px;
+}
+
+.rightBtn1 {
+    margin: 10px 0px 10px auto;
+}
+
+.rightBtn2 {
+    margin: auto 0px auto auto;
+}
+
+
+div#selectPostContentBody_B div, div#selectPostContentBody_B span, div#selectPostContentBody_B p {
+    text-align: initial;
+    font-size: initial;
+    color: inherit;
+}

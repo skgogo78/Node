@@ -13,6 +13,7 @@ const pageRouter = require('./router/page');
 const authRouter = require('./router/auth');
 const imgRouter = require('./router/img');
 const postRouter = require('./router/post');
+const menuRouter = require('./router/menu');
 
 const sequelize = require('./models').sequelize;
 
@@ -31,9 +32,11 @@ app.set('port', process.env.PORT || 8001);
 
 
 
-app.use(morgan('dev'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')));
+
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded( { extended : false } ));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -57,6 +60,7 @@ app.use('/',pageRouter);
 app.use('/auth',authRouter);
 app.use('/img',imgRouter);
 app.use('/post',postRouter);
+app.use('/menu',menuRouter);
 
 app.use((req,res,next) => {
     const err = new Error('Not Found');

@@ -8,11 +8,13 @@
     letter-spacing: 0.5pt;
 }
 
+
 main {
     display: flex;
     flex-direction: row;
-    margin: 0 5%;
+    padding: 0 5%;
     height: -webkit-fill-available;
+    overflow: overlay;
 }
 
 header {
@@ -178,7 +180,7 @@ button:hover
     width: 300px;
 }
 
-#writeBox {
+#writeBox, #imagesBox {
     top: 45%;
     left: 50%;
     transform: translateX(-50%) translateY(-55%);
@@ -189,8 +191,9 @@ button:hover
 
 div#writeFoot {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: auto;
+    width: 100%;
 }
 
 div#writeMenu {
@@ -215,7 +218,7 @@ div#writeMenu > span:hover{
 
 div#writeDiv {
     width: 500px;
-    height: 250px;
+    height: 180px;
     margin: 20px 0 0 0;
     padding: 10px;
     border: 1px solid #ccc;
@@ -263,6 +266,7 @@ li#fontOblique{
 
 div#writeUtilBox {
     padding: 0;
+    z-index: 1;
 }
 
 #writeUtilBox > ul {
@@ -407,4 +411,275 @@ div#writeHead > p {
 }
 div#writeHead {
     margin-bottom: 15px;
+}
+
+#imagesBox {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    z-index: 1;
+    box-shadow: 0 0 2px 1px #ccc;
+}
+
+div#imagesMenu {
+    display: flex;
+    flex-direction: column;
+}
+
+div#imagesArea {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    gap: 5px 5px;
+    width: 545px;
+    height: 415px;
+    overflow: overlay;
+}
+
+div.imagePreview {
+    border : 1px solid #ccc;
+    border-radius: 5px;
+}
+
+div.imagePreview > div {
+    margin: 0.5px;
+    width: 95px;
+    height: 95px;
+    border-radius: 5px;
+    background-color: #eee;
+    border: 1px dotted #ccc;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+div.imagePreview > div > p {
+    font-size: 9pt;
+    color: #9e9e9e;
+    width: 55px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+div.imagePreview > div > img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+
+.areaSelect {
+    box-shadow: 0 0 3px 0.3px rgb(0, 174, 255);
+}
+
+.imgDeleteBtn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 12px 5px;
+    width: max-content;
+    transform: translateY(-50%) translateX(-50%);
+    box-shadow: 0 0 0 0.5px #999;
+    border-radius: 50%;
+    background-color: #ffffff80;
+    font-size: 15pt;
+    font-weight: bold;
+    letter-spacing: 1pt;
+    cursor: pointer;
+}
+
+.imgHover:hover + .imgDeleteBtn{
+    display: block;
+}
+.imgDeleteBtn:hover {
+    display: block;
+}
+
+
+span.fileInputSpan {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: max-content;
+    height: max-content;
+    padding: 5px 10px;
+    font-weight: bold;
+    background-color: steelblue;
+    color: #fff;
+    border-radius: 20px;
+    display: block;
+}
+
+.fileButton:hover > .fileInputSpan {
+    background-color:tomato;
+}
+
+
+.fileButton {
+    width: max-content;
+    height: max-content;
+    position: relative;
+    margin: 5px auto 15px auto;
+    cursor : pointer;
+}
+
+input.fileInput {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+#localUploadDiv, #urlUploadDiv {
+    background-color: #eee;
+}
+
+#localUploadDiv, #urlUploadDiv, #etcDiv {
+    flex-direction: column;
+    display: flex;
+    margin-left: 12px;
+}
+
+#etcDiv {
+    flex: none;
+    margin-top: auto;
+}
+
+#etcDiv > button {
+    margin: 5px 0;
+}
+
+#localUploadDiv > span, #urlUploadDiv > span, #etcDiv > span {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 1px 0 #ccc;
+}
+
+#localUploadDiv, #urlUploadDiv {
+    box-shadow: 0 1px 3px #ccc;
+    margin-bottom: 12px;
+}
+
+div#urlForm {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 5px 15px 5px;
+}
+
+input#urlInput::placeholder {
+    font-size: 8pt;
+}
+
+input#urlInput {
+    padding: 6px 10px;
+    height: max-content;
+    width: 115px;
+    flex: 1;
+    margin: auto 5px auto auto;
+}
+
+#urlForm > button {
+    height: max-content;
+    width: max-content;
+    padding: 5px 10px;
+    flex: 1;
+    margin: auto;
+}
+
+div#buttonDiv {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+div#imgSelectPreview {
+    display: grid;
+    column-gap: 5px;
+    grid-template-columns: 1fr 3fr 3fr 3fr 3fr 3fr 1fr;
+    grid-template-rows: 85px;
+    height: 85px;
+    margin-top: 15px;
+}
+
+#imgSelectPreview > div > img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+#imgSelectPreview > div {
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0.5px #ccc;
+    padding: 2.5px;
+    background-color: #fff;
+}
+
+#imgSelectPreview > div > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 9pt;
+    width: 75%;
+    color: #9e9e9e;
+}
+
+#imgNextPrevBtn {
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    display: block;
+    cursor: pointer;
+}
+
+.prevBtn {
+    border-right: 20px solid #ccc;
+    transform: translateY(20px) translateX(-2.5px);
+}
+
+.nextBtn {
+    border-left : 20px solid #ccc;
+    transform: translateY(20px) translateX(2.5px);
+}
+
+.prevBtn:hover {
+    border-right: 20px solid tomato;
+}
+
+.nextBtn:hover {
+    border-left: 20px solid tomato;
+}
+
+#imgSelectPreview > div:nth-child(1), #imgSelectPreview > div:nth-last-child(1) {
+    background-color: unset;
+}
+
+.blackScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.8;
+}
+
+.hashtag {
+    
+    color : dodgerblue !important;
+
 }

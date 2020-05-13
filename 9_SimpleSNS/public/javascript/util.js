@@ -1,3 +1,82 @@
+
+// nodeSearch
+
+
+function nodeSearch(node, condition, callback){
+                                                
+    var searchCheck = condition(node);
+
+    if(searchCheck === true){
+        
+        callback(node);
+    
+    } else {
+
+        if(!arguments[3]){
+        
+            if(!node.nextSibling){
+
+                // console.log('[firstCheckNode]:', Function.prototype.firstCheckNode.data);
+                nodeSearch(node.previousSibling, condition, callback, true)
+            
+            } else {
+
+                nodeSearch(node.nextSibling, condition, callback);
+
+            }
+
+        } else {
+
+            if(node.previousSibling){
+
+                nodeSearch(node.previousSibling, condition, callback, true);
+            
+            }
+
+        }
+
+    }
+     
+}
+
+
+function textNodeChange(node){
+
+    if(node instanceof Text){
+        return node;
+    } else {
+        var data = document.createTextNode(node.textContent);
+        node.textContent = '';
+        node.appendChild(data);
+        return data;
+    }
+
+}
+
+function searchString(data, string, callback){
+
+    var array = arguments[3]? arguments[3] : [];
+    var index = data.indexOf(string);
+
+    if(index > -1){
+
+        var tmp = data.substring(index+1, data.length+1);
+        
+        index = index + (arguments[3]? array[array.length-1] + 1 : 0);
+
+        array.push(index);
+
+        searchString(tmp, string, callback, array);
+    
+    } else {
+
+        callback(array);
+    
+    }
+
+}
+
+
 function fileImageCheck(file){
 
     var types = file.type.split('/');
@@ -55,6 +134,8 @@ function xhrConnect(method, url, setting){
     var status401 = '';
     var status403 = '';
     var status404 = '';
+    var progress = '';
+    var load = '';
 
     if(setting){
         async = setting.async? setting.async : true;
@@ -66,6 +147,25 @@ function xhrConnect(method, url, setting){
         status401 = setting.status401? setting.status401 : '';
         status403 = setting.status403? setting.status403 : '';
         status404 = setting.status404? setting.status404 : '';
+        progress = setting.progress? setting.progress : '';
+        load = setting.load? setting.load : '';
+        
+        if(setting.progressBoxCreate === true){
+
+            var body = document.querySelector('body');
+
+            var p = elementCreate('p');
+            p.innerHTML = '업로드 중...';
+            
+            var percent = elementCreate('span', { id : 'percent' });
+            var progressBar = elementCreate('progress', { id : 'progressBar' });
+
+            var barDiv = elementCreate('div', { id : 'barDiv', addObjects : [ progressBar, percent ]});
+            var progressBox = elementCreate('div', { id : 'progressBox', classNames : 'box', addObjects : [p, barDiv]});
+            
+            body.appendChild(progressBox);
+
+        }
     }
 
     var queryString = '?';
@@ -84,6 +184,9 @@ function xhrConnect(method, url, setting){
     queryString += 'p=' + window.location.href;
 
     xhr.open(method, url + queryString, async);
+    
+    if(load) xhr.addEventListener('load',load,false);
+    if(progress) xhr.upload.addEventListener('progress', progress,false);
 
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
@@ -183,6 +286,7 @@ function elementCreate(tagName, setting){
 
 }
 
+
 function alertBox(text){
     
     var body = document.getElementsByTagName('body')[0];
@@ -210,4 +314,23 @@ function alertBox(text){
 
     return alertBox;
 
+}
+
+function HTMLparse(string){
+    
+    var tmpDiv = document.createElement('div');
+    
+    tmpDiv.id = (function(id){
+        var chk = document.getElementById(id);
+        if(chk){
+            return arguments.callee('_'+id);    
+        } else {
+            return id
+        }
+    })('HTMLparse');
+
+    tmpDiv.innerHTML = string;
+
+    return tmpDiv.childNodes;
+    
 }

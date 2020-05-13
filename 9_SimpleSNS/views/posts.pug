@@ -1,22 +1,44 @@
-ul#posts
-    each val in list
-        -const item = val.dataValues
-        li.postItem(data-id=item.id)
-            .postProfileImg
-                img(src=item.member.profileImg)
-            .post
-                .postHeader
-                    span.postnickname=item.member.nickname
-                .postBody
-                    span.postContent=item.content
-                .postFooter
-                    .postDate
-                        span=item.createdAt
-                    .postCommentCount
-                        img(src='./images/commentIcon.svg')
-                        span=item.commentCount
-                    .postFavoriteCount
-                        img(src='./images/favoriteIcon.svg')
-                        span=item.favoriteCount
+each val in list
+    -const item = val.dataValues
+    li.postItem(data-id=item.id)
+        .postProfileImg
+            img(src=item.member.profileImg)
+        .post
+            .postHeader
+                span.postNickname=item.member.nickname
+                span.postMenu
+                    img(src='./images/optionBtn.svg')
+                    img(src='./images/optionBtn_over.svg')
+            .postBody
+                div.postContent!=item.content
+                if item.postImgs.length > 0
+                    div.postImgPreviews
+                        div.postImgPreviewRow
+                            -for(let i = 0 ; i < 2 ; i++)
+                                if item.postImgs[i]
+                                    div.postImgPreviewColumn(data-id=item.postImgs[i].dataValues.id)
+                                        div
+                                            img(src=item.postImgs[i].dataValues.path)
+                                            div.postImgPreviewArea
+                        if item.postImgs.length > 2
+                            div.postImgPreviewRow
+                                -for(let i = 2 ; i < 4 ; i++)
+                                    if item.postImgs[i]
+                                        div.postImgPreviewColumn(data-id=item.postImgs[i].dataValues.id)
+                                            div
+                                                img(src=item.postImgs[i].dataValues.path)
+                                                if i === 3 && item.postImgs.length > 3
+                                                    div.imgsPlus
+                                                        img.plusBtn(src='./images/plusBtn.svg')
+                                                div.postImgPreviewArea
+            .postFooter
+                .postDate
+                    span=item.createdAt
+                .postCommentCount
+                    img(src='./images/commentIcon.svg')
+                    span=item.commentCount
+                .postFavoriteCount
+                    img(src='./images/favoriteIcon.svg')
+                    span=item.favoriteCount
 
 

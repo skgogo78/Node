@@ -1,490 +1,427 @@
-var searchButton = document.getElementById('searchButton');
-if(searchButton) searchButton.addEventListener('mousedown', function(e){
+function imgSizeFun(div, that){
+
+    var img = that;
+    var selectPostImgDiv = div.querySelector('#selectPostImgDiv');
+    var selectPostImg = div.querySelector('#selectPostImg');
+
+    var maxWidth = selectPostImg.offsetWidth * 0.8;
+    var width = (img.offsetWidth * (div.offsetHeight/img.offsetHeight)-10);
+
+    selectPostImgDiv.style.width =  ((maxWidth < width)? maxWidth : width) + 'px';
+
+}
+
+function selectPostEvent(div){
     
-    var searchInput = document.getElementById('searchInput');
-    var keyword = searchInput.value;
+    xhrConnect('get','/img/post/'+div.querySelector('#selectPost').dataset.id,{
+        header : {
+            'Content-type' : 'application/json;charset=utf-8'
+        },
+        status200 : function(res){
+            var data = JSON.parse(res);
+
+            var selectPostImg = document.getElementById('selectPostImg');
+            selectPostImg.imgs = data;
+        }
+    })
+
+    var img = div.querySelector('#selectPostImgDiv > img');
+
+    img.addEventListener('load', function(e){
+        imgSizeFun(div, e.currentTarget);
+    });
     
-    if(!keyword){
-        alertBox('검색 정보를 입력해주세요.')
+    
+    var selectBtnCloseBtn = div.querySelector('#selectBtnCloseBtn');
+    
+    selectBtnCloseBtn.addEventListener('mousedown', function(e){
+
+      var selectPostBox = document.getElementById('selectPostBox');
+      selectPostBox.remove();
+
+    });
+
+    var selectBtnConToogleBtn = div.querySelector('#selectBtnConToogleBtn');
+
+    function toggleOnEvent(e){
+        
+        var selectPostRight = div.querySelector('#selectPostRight');
+        selectPostRight.style.display = 'block';
+        
+        var selectPostLeft = div.querySelector('#selectPostLeft');
+        selectPostLeft.style.flex = '0 1 80%';
+
+        e.currentTarget.style.transform = '';
+
+        e.currentTarget.addEventListener('mousedown',toggleHideEvent);
+        e.currentTarget.removeEventListener('mousedown', toggleOnEvent);
     }
 
-});
+    function toggleHideEvent(e){
+        
+        var selectPostRight = div.querySelector('#selectPostRight');
+        selectPostRight.style.display = 'none';
 
-var writeButton = document.getElementById('writeButton');
-if (writeButton) writeButton.addEventListener('mousedown', function(e){
+        var selectPostLeft = div.querySelector('#selectPostLeft');
+        selectPostLeft.style.flex = '0 1 100%';
 
-    var body = document.getElementsByTagName('body')[0];
+        e.currentTarget.style.transform = 'rotate(180deg)';
 
-    var writeBox = document.getElementById('writeBox');
-    if(writeBox) writeBox.remove();
+        e.currentTarget.addEventListener('mousedown',toggleOnEvent);
+        e.currentTarget.removeEventListener('mousedown', toggleHideEvent);
+
+    }
+    
+    selectBtnConToogleBtn.addEventListener('mousedown', toggleHideEvent);
 
 
-    // setting = [ [menuName, function, elementSetting], ... ]
-    function listCreate(e, setting, listName){
-
-        var fontList = document.getElementById(listName);
-        if(!fontList) {
-            var writeUtilBox = document.getElementById('writeUtilBox');
-            if(writeUtilBox) writeUtilBox.remove();
-
-            var array = [];
-
-            setting.forEach(function(val){
-
-                var menu = elementCreate('li', val[2]);
-                menu.innerHTML = val[0];
-                menu.addEventListener('mousedown', val[1]);
-
-                array.push(menu);
-            });
-
-            var list = elementCreate('ul', { id : listName, addObjects : array });
-            var writeUtilBox = elementCreate('div', { id : 'writeUtilBox', classNames : 'box', addObjects: [list]});
+    function btnEvent(next){
             
-            var y = e.currentTarget.offsetHeight + e.currentTarget.offsetTop;
-            var x = e.currentTarget.offsetLeft;
+        var selectPostImg = document.getElementById('selectPostImg');
+        var index = Number(selectPostImg.dataset.index);
 
-            writeUtilBox.style.top = y + 'px';
-            writeUtilBox.style.left = x + 'px';
+        var div = document.getElementById('selectPostBox');
 
-            e.currentTarget.parentNode.parentNode.appendChild(writeUtilBox);
+        var img = div.querySelector('#selectPostImgDiv > img');
+
+        var num = next? +1 : -1;
+
+        selectPostImg.dataset.index = index + num;
+        img.src = selectPostImg.imgs[index + num].path;
+        
+
+        function btnCreate(next){
+
+            var tagId = next? 'selectBtnImgNextBtn' : 'selectBtnImgPrevBtn';
+
+            var btn = document.getElementById(tagId);
+
+            if(!btn){
+
+                var div = elementCreate('div', {
+
+                    id : tagId,
+                    classNames : ['btnBack', (next? 'rightBtn2' : 'leftBtn2')],
+                    addObjects : [ elementCreate('img', {
+
+                        addAttribute : function(el){
+                            el.src = './images/arrows.svg';
+                            if(!next) el.style.transform = 'rotate(180deg)';
+                        }
+
+                    })]
+
+                });
+
+                var appendTarget = next? 1 : 0;
+
+                var selectPostImgBtnDiv = document.querySelectorAll('.selectPostImgBtnDiv > div:nth-child(2)')[appendTarget];
+                if(next) {
+                    div.addEventListener('mousedown', function(e){
+                        btnEvent();
+                    });
+                } else {
+                    div.addEventListener('mousedown', function(e){
+                        btnEvent(true);
+                    });
+                }
+
+                selectPostImgBtnDiv.appendChild(div);
+            }
+        }
+        
+        if(selectPostImg.imgs[Number(selectPostImg.dataset.index)-1]){
+            
+            btnCreate(true);
+
+        } else {
+            
+            var btn = document.getElementById('selectBtnImgNextBtn');
+
+            if(btn) btn.remove();
+     
+        }
+
+        if(selectPostImg.imgs[Number(selectPostImg.dataset.index)+1]){
+            
+            btnCreate();
+
         } else {
 
-            fontList.parentNode.remove();
-            
+            var btn = document.getElementById('selectBtnImgPrevBtn');
+
+            if(btn) btn.remove();
+
         }
-    }
 
-    var fontJustify = elementCreate('span', { id : 'fontJustify' });
-    fontJustify.innerHTML = 'JUSTIFY';
-    fontJustify.addEventListener('mousedown', function(e){
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var setting = [
-            ['왼쪽 정렬', function(e){
-                document.execCommand('justifyLeft');
-                e.currentTarget.parentNode.parentNode.remove();
-            }],
-            ['중앙 정렬', function(e){
-                document.execCommand('justifyCenter');
-                e.currentTarget.parentNode.parentNode.remove();
-            }],
-            ['오른쪽 정렬', function(e){
-                document.execCommand('justifyRight');
-                e.currentTarget.parentNode.parentNode.remove();
-            }],
-            ['양쪽 정렬', function(e){
-                document.execCommand('justifyFull');
-                e.currentTarget.parentNode.parentNode.remove();
-            }]
-        ]
-        listCreate(e, setting, 'fontJustifyList');
-    });
-
-    var fontColor = elementCreate('span', { id : 'fontColor' });
-    fontColor.innerHTML = 'COLOR';
-
-    fontColor.addEventListener('mousedown', function(e){
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var colorBox = document.getElementById('colorBox');
-        if(colorBox) colorBox.remove();
-        else {
-
-            var writeUtilBox = document.getElementById('writeUtilBox');
-            if(writeUtilBox) writeUtilBox.remove();
-
-            var colorPreview = elementCreate('span', { id :'colorPreview' });
-
-            function colorPick(){
-
-                var colorHueRange = document.getElementById('colorHueRange');
-                var colorPicker = document.getElementById('colorPicker');
-                var colorArea = document.getElementById('colorArea');
-
-                var hue = colorHueRange.value;
-                var s = ((colorPicker.offsetLeft + 5)/colorArea.offsetWidth).toFixed(2)*100;
-                var l = Number(50 - ((colorPicker.offsetTop + 5)/colorArea.offsetHeight).toFixed(2)*50);
-                
-                l = l+(l-(l*s/100).toFixed(2));
-
-
-                var colorPreview = document.getElementById('colorPreview');
-                
-                colorArea.style.backgroundColor = 'hsl('+hue+', 100%, 50%)';
-                colorPreview.style.backgroundColor = 'hsl(' + hue + ', ' + s + '%, ' + l + '%)';
-                
-            }
-
-            var colorHueRange = elementCreate('input', { id : 'colorHueRange' });
-            colorHueRange.type = 'range';
-            colorHueRange.min = 0;
-            colorHueRange.max = 359;
-            colorHueRange.value = 0;
-            colorHueRange.addEventListener('input',function(e){
-                colorPick();
-            });
-
-            var colorHeader = elementCreate('div', { id : 'colorHeader', addObjects : [colorPreview, colorHueRange] });
-            
-            var colorArea = elementCreate('div', { id : 'colorArea' });
-            
-            function mousemove(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                var x = e.offsetX;
-                var y = e.offsetY;
-
-                var colorPicker = document.getElementById('colorPicker');
-
-                colorPicker.style.top = y - 5 +'px';
-                colorPicker.style.left = x - 5 + 'px';
-
-                colorPick();
-            }
-            
-            function mouseupandout(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                var moveArea = e.currentTarget;
-
-                moveArea.removeEventListener('mouseout', mouseupandout);
-                moveArea.removeEventListener('mouseup', mouseupandout);
-                moveArea.removeEventListener('mousemove', mousemove);
-            }
-
-            function mousedown(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                var x = e.offsetX;
-                var y = e.offsetY;
-
-                var colorPicker = document.getElementById('colorPicker');
-
-                colorPicker.style.top = y - 5 +'px';
-                colorPicker.style.left = x - 5 + 'px';
-
-                colorPick();
-
-                var moveArea = e.currentTarget;
-
-                moveArea.addEventListener('mouseup', mouseupandout);
-                moveArea.addEventListener('mouseout', mouseupandout);
-                moveArea.addEventListener('mousemove', mousemove);
-
-            }
-
-            var moveArea = colorArea.cloneNode();
-            moveArea.id = 'colorAreaClone';
-            
-            moveArea.addEventListener('mousedown', mousedown);
-            
-            
-            
-            var colorPicker = elementCreate('span', { id : 'colorPicker' });
-            
-            var colorBody = elementCreate('div', { id : 'colorBody', addObjects : [colorArea, colorPicker, moveArea] });
-
-            var submitBtn = elementCreate('button');
-            submitBtn.innerHTML = '적용';
-            submitBtn.addEventListener('mousedown', function(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                var color = document.getElementById('colorPreview').style.backgroundColor;
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('foreColor', false, color);
-
-                e.currentTarget.parentNode.parentNode.parentNode.remove();
-            });
-
-            var closeBtn = elementCreate('button');
-            closeBtn.innerHTML = '닫기';
-            closeBtn.addEventListener('mousedown', function(e){
-                e.currentTarget.parentNode.parentNode.parentNode.remove();
-            }) ;
-
-            var colorFoot = elementCreate('div', { id : 'colorFoot', addObjects : [submitBtn, closeBtn]});
-
-            var colorBox = elementCreate('div', { id : 'colorBox', addObjects : [colorHeader, colorBody, colorFoot] });
-
-            var writeUtilBox = elementCreate('div', { id : 'writeUtilBox', classNames : 'box', addObjects: [colorBox]});
-
-            var y = e.currentTarget.offsetHeight + e.currentTarget.offsetTop;
-            var x = e.currentTarget.offsetLeft;
-
-            writeUtilBox.style.top = y + 'px';
-            writeUtilBox.style.left = x + 'px';
-
-            e.currentTarget.parentNode.parentNode.appendChild(writeUtilBox);
-        }
-    });
-
-    var fontMenu = elementCreate('span', { id : 'fontMenu' });
-    fontMenu.innerHTML = 'FONT';
+        // imgSizeFun(div);
     
-    fontMenu.addEventListener('mousedown', function(e){
+    }
 
-        e.preventDefault();
-        e.stopPropagation();
-
-        var setting = [
-            ['나토 산스 KR',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Noto Sans KR');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'NotoSansKR' }],
-
-            ['선플라워',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Sunflower');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'Sunflower' }],
-
-            ['도현',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Do Hyeon');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'DoHyeon' }],
-
-            ['나눔 펜 스크립트',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Nanum Pen Script');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'NanumPenScript' }],
-            
-            ['나눔 명조',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Nanum Myeongjo');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'NanumMyeongjo' }],
-
-            ['나눔 고딕',
-            function(e){
-                document.execCommand('styleWithCSS', false, true);
-                document.execCommand('fontName', false, 'Nanum Gothic');
-                e.currentTarget.parentNode.parentNode.remove();
-                
-            },
-            { id : 'NanumGothic' }],
-            
-        ];
-
-        listCreate(e, setting, 'fontList');
-
-    });
-
-    var fontStyleMenu = elementCreate('span', { id : 'fontStyleMenu' });
-    fontStyleMenu.innerHTML = 'STYLE';
-
-    fontStyleMenu.addEventListener('mousedown',function(e){
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        var setting = [
-            ['기울기' , function(e){
-                document.execCommand('italic');
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { id : 'fontOblique' }],
-
-            ['굵게' , function(e){
-                document.execCommand('bold');
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { id : 'fontOblique' }],
-        ]
-
-        listCreate(e, setting, 'fontStyleList');
-
-    });
-
-    var fontSizeMenu = elementCreate('span', { id : 'fontSizeMenu' });
-    fontSizeMenu.innerHTML = 'SIZE';
-
-    function fontTagChange(){
-        var fonts = document.querySelectorAll('font');
-        
-        if(fonts.length > 0){
-            var fontSizeMenu = document.getElementById('fontSizeMenu');
-            var size = fontSizeMenu.dataset.tmpSize;
-
-            fonts.forEach(function(font){
-                var text = font.innerHTML;
-                var span = document.createElement('span');
-
-                span.style.fontSize = size  + 'pt';
-                span.innerHTML = text;
     
-                font.parentNode.insertBefore(span, font);
-                font.remove();
-            });
-
-            delete fontSizeMenu.dataset.tmpSize;
-        }
-        
+    var selectBtnImgNextBtn = div.querySelector('#selectBtnImgNextBtn');
+    
+    if(selectBtnImgNextBtn) {
+        selectBtnImgNextBtn.addEventListener('mousedown', function(e){
+            btnEvent();
+        });
     }
 
-    function sizeFun(size){
-        
-        var fontSizeMenu = document.getElementById('fontSizeMenu');
-        fontSizeMenu.dataset.tmpSize = size;
-
-        document.execCommand('styleWithCSS', false, false);
-        document.execCommand('fontSize', false, 1);
-
+    var selectBtnImgPrevBtn = div.querySelector('#selectBtnImgPrevBtn');
+    if(selectBtnImgPrevBtn) {
+        selectBtnImgPrevBtn.addEventListener('mousedown', function(e){
+            btnEvent(true);
+        });
     }
 
-    fontSizeMenu.addEventListener('mousedown', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        
+}
 
-        var setting = [
-            ['가나다라마바', function(e){
-                
-                e.preventDefault();
-                e.stopPropagation();
-                
-                sizeFun(8);
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { addAttribute : function(el){
-                el.style.fontSize = '8pt';
-            }}],
-            ['가나다라마바', function(e){
+function postImgsPreviewEvent(postItem){
+    
+    var postImgPreviews = postItem.querySelector('.postImgPreviews');
+    if(!postImgPreviews) return;
 
-                e.preventDefault();
-                e.stopPropagation();
-                
-                sizeFun(10);
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { addAttribute : function(el){
-                el.style.fontSize = '10pt';
-            }}],
-            ['가나다라마바', function(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-                
-                sizeFun(14);
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { addAttribute : function(el){
-                el.style.fontSize = '14pt';
-            }}],
-            ['가나다라마바', function(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-                
-                sizeFun(18);
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { addAttribute : function(el){
-                el.style.fontSize = '18pt';
-            }}],
-            ['가나다라마바', function(e){
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                sizeFun(24);
-                e.currentTarget.parentNode.parentNode.remove();
-            }, { addAttribute : function(el){
-                el.style.fontSize = '24pt';
-            }}]
-        ]
-
-        listCreate(e,setting,'fontSizeList');
-    });
-
-    var writeMenu = elementCreate('div', { id : 'writeMenu', addObjects : [ fontMenu, fontSizeMenu, fontStyleMenu, fontColor, fontJustify ] });
-
-    var submitBtn = elementCreate('button');
-    submitBtn.innerHTML = '작성';
-    submitBtn.addEventListener('mousedown', function(e){
-        
-        var writeDiv = document.getElementById('writeDiv');
-
-        if(writeDiv && writeDiv.innerHTML){
-            xhrConnect('post','/post',{
-                header : {
-                    'Content-Type' : 'application/json;charset=utf-8'
-                },
+    var postImgPreviewColumns = postImgPreviews.querySelectorAll('.postImgPreviewColumn');
+    
+    postImgPreviewColumns.forEach(function(postImgPreviewColumn){
+        postImgPreviewColumn.addEventListener('mousedown', function(e){
+            var imgSelectId = e.currentTarget.dataset.id;
+            xhrConnect('get', '/post/'+postItem.dataset.id, {
                 requestObject : {
-                    content : writeDiv.innerHTML
+                    'imgSelectId' : imgSelectId
                 },
                 status200 : function(res){
 
-                    console.log(JSON.parse(res));
+                    var body = document.querySelector('body');
+                    var div = elementCreate('div', { id : 'selectPostBox'});
+                    div.innerHTML = res;
+                    
+                    body.appendChild(div);
 
-                    document.getElementById('writeBox').remove();
-                    postLoad();            
-                },
-                status403 : function(res){
-                    if(res){
-                        alertBox('로그인 후 시도하세요.');
+                    selectPostEvent(div);
+
+                }
+            })
+        });
+    })
+}
+
+function postMenuCreate(setting){
+    
+    var body = document.querySelector('body');
+
+    var menuPop = document.getElementById('menuPop');
+    
+    if(!menuPop){
+
+        var menuArea = elementCreate('div', { id : 'menuArea' });
+        menuArea.addEventListener('mousedown',function(e){
+
+            e.preventDefault();
+            e.stopPropagation();
+            var menuPop = document.getElementById('menuPop');
+            menuPop.remove();
+
+        });
+
+        var menuUl = elementCreate('ul', { id : 'menuUl' });
+        
+        var menuDiv = elementCreate('div', { id : 'menuDiv', addObjects : menuUl });
+        menuDiv.style.top = setting.menuLocTop + 'px';
+        menuDiv.style.left = setting.menuLocLeft + 'px';
+
+        menuPop = elementCreate('div', { id : 'menuPop', addObjects : [menuArea, menuDiv] });
+        body.appendChild(menuPop);
+    }
+    
+    var menuUl = menuPop.querySelector('#menuUl');
+    menuUl.appendChild(elementCreate('li', {
+        id : setting.id,
+        classNames : 'menuItem',
+        addAttribute : function(el){
+            el.innerHTML = setting.menuName;
+            el.addEventListener('mousedown', setting.event);
+        }
+    }));
+
+}
+
+function postMenuEvent(node){
+    
+    var id = node.dataset.id;
+    
+    var postMenu = node.querySelector('.postMenu');
+    
+    var setting = {};
+
+    postMenu.addEventListener('mousedown',function(e){
+        var main = document.querySelector('main')
+        setting['menuLocTop'] = e.currentTarget.offsetTop - main.scrollTop;
+        setting['menuLocLeft'] = e.currentTarget.offsetLeft;
+        
+        xhrConnect('get', '/menu/'+id, {
+            header : {
+                'Content-type' : 'application/json;charset=utf-8'
+            },
+            status200 : function(res){
+
+                var data = JSON.parse(res);
+                data.menus.forEach(function(menu){
+
+                    
+                    setting['menuName'] = menu;
+                    setting['id'] = menu.toLowerCase();
+
+                    function menuPopDelete(){
+                        var menuPop = document.getElementById('menuPop');
+                        menuPop.remove();
+                    }
+
+                    if(menu === 'URL COPY'){
+                        setting['id'] = 'urlcopy';
+                        setting['event'] = function(e){
+                            console.log('해당 트윗 긁기');
+                            menuPopDelete();
+                        }
+                    } else if (menu === 'DELETE'){
+                        setting['event'] = function(e){
+
+                            xhrConnect('delete', '/post/'+id, {
+                                status200 : function(res){
+                                    if(res){
+                                        console.log(res);
+                                        node.remove();
+                                    }
+                                }
+                            });
+                            menuPopDelete();
+                        }
+                    } else if (menu === 'MODIFY'){
+                        setting['event'] = function(e){
+                            
+                            xhrConnect('get', '/post/json/'+id, {
+                                header : {
+                                    'Content-type' : 'application/json;charset=utf-8'
+                                },
+                                status200 : function(res){
+                                    if(res){
+                                        
+                                        var data = JSON.parse(res);
+
+                                        modifyAndWriteEvent(e, data);
+                                    }
+                                }
+                            });
+                            
+                            menuPopDelete();
+                        }
+                    } else if (menu === 'FOLLOW'){
+                        setting['event'] = function(e){
+                            console.log('팔로잉');
+                            menuPopDelete();
+                        }
+                    } else if (menu === 'FAVORITE'){
+                        setting['event'] = function(e){
+                            console.log('즐찾');
+                            menuPopDelete();
+                        }
+                    }
+
+                    postMenuCreate(setting);
+
+                });
+            }
+        });
+    });
+    
+}
+
+function postLoad(queryString,loc, modify){
+
+    var setting = {
+
+        status200: function(res){
+            
+            var snsItemList = document.getElementById('snsItemList');
+            
+            var posts = document.getElementById('posts');
+            
+            var nodes = HTMLparse(res);
+
+            if(!posts){
+            
+                posts = elementCreate('ul', { id : 'posts' });
+
+                snsItemList.innerHTML = '';
+                snsItemList.appendChild(posts);
+            
+            }
+
+            if(!queryString && !loc){
+
+                posts.innerHTML = '';
+
+            }
+
+            nodes.forEach(function(node){
+                
+                if(modify === false || !modify){
+
+                    if(loc === true) posts.insertBefore(node, posts.childNodes[0]);
+                    else posts.appendChild(node);
+
+                } else {
+                    for(var i = 0 ; i < posts.childNodes.length ; i ++){
+                        if(posts.childNodes[i].dataset.id === node.dataset.id){
+                            posts.insertBefore(node, posts.childNodes[i]);
+                            posts.childNodes[i+1].remove();
+                            break;
+                        }
                     }
                 }
+                
+                if(modify === true) console.log('엥',node);
+                postMenuEvent(node);
+                postImgsPreviewEvent(node);
+
             });
-        } else {
-            alertBox('내용을 입력해주세요.');
+
+            document.querySelector('main').addEventListener('scroll', scrollEvent);
+        
         }
+    }
+    if(queryString){
+        setting.requestObject = queryString
+    }
 
-    });
+    xhrConnect('get','/post/', setting);
 
-    var closeBtn = elementCreate('button');
-    closeBtn.innerHTML = '닫기';
-    closeBtn.addEventListener('mousedown', function(e){
-        var target = e.currentTarget.parentNode.parentNode;
-        target.remove();
-    });
+}
 
-    var writeFoot = elementCreate('div', { id : 'writeFoot', addObjects : [submitBtn, closeBtn]});
+    
+function scrollEvent(e){
 
-    var writeDiv = elementCreate('div', { id : 'writeDiv' });
-    writeDiv.contentEditable = true;
+    var posts = document.getElementById('posts');        
+    
+    if(posts){
 
-    writeDiv.addEventListener('keypress', function(e){
-        if(e.keyCode === 13){
-            document.execCommand('formatBlock', false, 'p');
+        var h = e.currentTarget.offsetHeight;
+        var sL = e.currentTarget.scrollTop;
+        var sH = e.currentTarget.scrollHeight;
+        
+        var num = (h + Math.floor(sL)) - sH;
+        
+        if(-10 <= num && num <= 10){
+            
+            var postItems = document.getElementsByClassName('postItem');
+            
+            document.querySelector('main').removeEventListener('scroll', scrollEvent);
+            
+            postLoad({
+                offset : postItems.length
+            });
+            
         }
-    });
+    }
 
-    writeDiv.addEventListener('input', function(e){
-        fontTagChange();
-    });
-
-    var writeBody = elementCreate('div', { id : 'writeBody', addObjects : [writeMenu, writeDiv]});
-
-    var writeHead = elementCreate('div', { id : 'writeHead'});
-    writeHead.innerHTML = '<p>글작성</p>';
-
-    writeBox = elementCreate('div', { id : 'writeBox', classNames : 'box', addObjects : [writeHead, writeBody, writeFoot] });
-
-    body.appendChild(writeBox);
-
-});
+}

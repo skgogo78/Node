@@ -1,0 +1,45 @@
+
+#selectPost(data-id=data.id)
+    #selectPostLeft
+        each val,i in data.postImgs
+            if val.dataValues.id == imgSelectId
+                #selectPostBody
+                    #selectPostImg(data-index=i)
+                        .selectPostImgBtnDiv
+                            div
+                                #selectBtnCloseBtn.btnBack.leftBtn1
+                                    img(src='./images/closeBtn.svg')
+                            div
+                                if data.postImgs[i+1]
+                                    #selectBtnImgPrevBtn.btnBack.leftBtn2
+                                        img(src='./images/arrows.svg', style='transform: rotate(180deg);')
+                        #selectPostImgDiv
+                            img(src=val.dataValues.path)
+                        .selectPostImgBtnDiv
+                            div
+                                #selectBtnConToogleBtn.btnBack.rightBtn1
+                                    img(src='./images/conCloseBtn.svg')
+                            div
+                                if data.postImgs[i-1]
+                                    #selectBtnImgNextBtn.btnBack.rightBtn2
+                                        img(src='./images/arrows.svg')
+    #selectPostRight
+        #selectPostContent
+            #selectPostContentHeader
+                #selectPostProfileImg
+                    img(src=data.member.profileImg)
+                #selectPostNickName
+                    span=data.member.nickname
+            #selectPostContentBody
+                #selectPostContentBody_B!=data.content
+                #selectPostContentBody_F
+                    span=data.createdAt
+            #selectPostContentFooter
+                #selectPostCommentCount
+                    img(src='./images/commentIcon.svg')
+                    span=data.commentCount
+                #selectPostFavoriteCount
+                    img(src='./images/favoriteIcon.svg')
+                    span=data.favoriteCount
+.blackScreen
+    

@@ -14,7 +14,6 @@ main {
     flex-direction: row;
     padding: 0 5%;
     height: -webkit-fill-available;
-    overflow: overlay;
 }
 
 header {
@@ -133,12 +132,13 @@ button:hover
 
 #sectionBody {
     flex-basis: 85%;
+    overflow: auto;
 }
 
 #searchBar {
     flex: 1;
-    padding : 10px 0;
-    margin: 20px auto;
+    padding: 10px 0;
+    margin: auto;
     box-shadow: 0 1px 1px #aaa;
     display: flex;
     flex-direction: row;

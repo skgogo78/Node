@@ -386,7 +386,7 @@ function postLoad(queryString,loc, modify){
 
             });
 
-            document.querySelector('main').addEventListener('scroll', scrollEvent);
+            document.querySelector('#sectionBody').addEventListener('scroll', scrollEvent);
         
         }
     }
@@ -415,7 +415,7 @@ function scrollEvent(e){
             
             var postItems = document.getElementsByClassName('postItem');
             
-            document.querySelector('main').removeEventListener('scroll', scrollEvent);
+            document.querySelector('#sectionBody').removeEventListener('scroll', scrollEvent);
             
             postLoad({
                 offset : postItems.length
